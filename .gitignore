@@ -1,24 +1,30 @@
-# --- ไฟล์ระบบและ Cache ---
-__pycache__/
-*.py[cod]
-*$py.class
-
-# --- ไฟล์ความลับ (ห้ามหลุดเด็ดขาด!) ---
+# --- Security (สำคัญที่สุด ห้ามลบ) ---
+# ป้องกัน Key ของ Google หลุดขึ้นเน็ต
 json/credentials.json
-credentials.json
-config/credentials.json
 
-# --- ไฟล์ที่ Build เป็น EXE แล้ว (ไม่ต้องเอาขึ้น มันหนัก) ---
-build/
-dist/
-*.spec
-*.exe
+# --- Python & System ---
+# ไฟล์ขยะที่ Python สร้างขึ้นมาเอง
+__pycache__/
+*.pyc
+.DS_Store
 
-# --- ไฟล์มีเดียหนักๆ (ถ้าเน็ตแรงจะเอาออกก็ได้ แต่แนะนำให้ไม่เอาขึ้น) ---
-test/*.mp4
+# --- Virtual Environment ---
+# โฟลเดอร์จำลองสภาพแวดล้อม Python (ถ้ามี)
+venv/
+env/
+.env
+
+# --- Project Data ---
+# ไม่เอาโฟลเดอร์รูปภาพที่เซฟไว้ (เพราะมันเยอะและรก)
+img/
+
+# ไม่เอาวิดีโอทดสอบ (เพราะไฟล์ใหญ่เกิน GitHub รับไหว)
+test/
+*.mp4
 *.avi
 *.mov
 
-# --- รูปที่แคปมาได้ (ไม่จำเป็นต้องเก็บ) ---
-img/*.jpg
-captured_plates/
+# --- IDE Settings ---
+# การตั้งค่าของโปรแกรมเขียนโค้ด (VS Code / PyCharm)
+.vscode/
+.idea/

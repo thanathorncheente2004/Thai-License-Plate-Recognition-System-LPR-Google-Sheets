@@ -5,10 +5,11 @@ import os
 if __name__ == '__main__':
     
     # 1. โหลดข้อมูล (Roboflow จะเช็คเองว่ามีไฟล์หรือยัง ถ้ามีแล้วมันจะไม่โหลดซ้ำ)
-    rf = Roboflow(api_key="6QOHxd1aWKehDcdO7lOC") # อย่าลืมใส่ Key
-    project = rf.workspace("meenyossakorn").project("thai-license-plate-character-recognition")
-    version = project.version(10)
+    rf = Roboflow(api_key="6QOHxd1aWKehDcdO7lOC")
+    project = rf.workspace("thanathorn-msskh").project("thai-license-plate-character-recognition-su5fk")
+    version = project.version(2)
     dataset = version.download("yolov8")
+                
 
     # rf = Roboflow(api_key="6QOHxd1aWKehDcdO7lOC")
     # project = rf.workspace("lru").project("lru-license-plate")
@@ -40,7 +41,7 @@ if __name__ == '__main__':
             patience=50,
             imgsz=640,
             batch=16,
-            workers=4,
+            workers=0,
             device=0,
             project='Train-License-Plate',
             name='run',      # ชื่อนี้ต้องตรงกับ Path ด้านบน

@@ -1,12 +1,12 @@
 {
     "app_state": {
-        "preset_name": "1",
+        "preset_name": "2",
         "is_dual_mode": false,
         "model_plate_path": "c:\\เรียน\\จารฟิว\\Thai LPR\\model\\best_plate.pt",
         "model_char_path": "c:\\เรียน\\จารฟิว\\Thai LPR\\model\\best_char.pt",
         "speed": 35,
         "source_type": "video",
-        "source_path": "C:/เรียน/จารฟิว/Thai LPR/test/videoplayback (1).mp4"
+        "source_path": "C:/เรียน/จารฟิว/Thai LPR/test/font.mp4"
     },
     "presets": {
         "Default": {
@@ -68,20 +68,76 @@
         "1": {
             "single": [
                 [
+                    800,
+                    545
+                ],
+                [
+                    1070,
+                    545
+                ],
+                [
+                    1100,
+                    1870
+                ],
+                [
+                    805,
+                    1870
+                ]
+            ],
+            "entry": [
+                [
+                    100,
+                    560
+                ],
+                [
+                    450,
+                    560
+                ],
+                [
+                    400,
+                    1010
+                ],
+                [
+                    50,
+                    1010
+                ]
+            ],
+            "exit": [
+                [
+                    800,
+                    200
+                ],
+                [
+                    1150,
+                    200
+                ],
+                [
+                    1200,
+                    650
+                ],
+                [
+                    850,
+                    650
+                ]
+            ]
+        },
+        "2": {
+            "single": [
+                [
                     240,
-                    755
+                    -15
                 ],
                 [
-                    1665,
-                    755
+                    510,
+                    -15
                 ],
                 [
-                    1660,
-                    1065
+                    540,
+                    1310
                 ],
                 [
                     245,
-                    1065
+                    1310
                 ]
             ],
             "entry": [
