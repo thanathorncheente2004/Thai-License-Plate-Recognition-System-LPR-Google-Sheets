@@ -796,24 +796,73 @@ class LPRApp:
         name = self.combo_preset.get()
         if name in self.presets:
             self.app_state["preset_name"] = name
-            self.load_config()
+            # ดึงค่าจาก preset ที่เลือกมาใส่ในโซนที่ใช้งานอยู่
+            saved_zones = self.presets[name]
+            for k in self.app_state["zones"]:
+                if k in saved_zones:
+                    self.app_state["zones"][k] = np.array(saved_zones[k], np.int32)
             self.save_config()
 
     def save_config_action(self):
-        new_name = self.new_preset_var.get().strip()
-        if new_name:
-            self.app_state["preset_name"] = new_name
-            self.presets[new_name] = {
-                k: v.tolist() for k, v in self.app_state["zones"].items()
-            }
-            self.combo_preset["values"] = list(self.presets.keys())
-            self.combo_preset.set(new_name)
-            self.new_preset_var.set("")
+        # 1. รับชื่อ Preset
+        name = self.new_preset_var.get().strip()
+        if not name:
+            name = self.preset_var.get()
+        
+        if not name:
+            messagebox.showwarning("Warning", "Please enter or select a preset name")
+            return
+
+        # 2. แก้จุดนี้: ใช้ .copy() หรือสร้าง List ใหม่เพื่อตัดการเชื่อมโยง (Deep Copy)
+        zones_data = {}
+        for k, v in self.app_state['zones'].items():
+            # v.tolist() จะสร้าง List ชุดใหม่ขึ้นมา ไม่ยุ่งกับของเดิมใน Memory
+            zones_data[k] = v.tolist() 
+
+        # 3. บันทึกลงตัวแปร presets แยกตามชื่อ
+        self.presets[name] = zones_data
+        self.app_state['preset_name'] = name
+        
+        # 4. อัปเดต UI Dropdown
+        self.combo_preset['values'] = list(self.presets.keys())
+        self.preset_var.set(name)
+        self.new_preset_var.set("") 
+
+        # 5. บันทึกลงไฟล์ JSON
         if self.save_config():
-            messagebox.showinfo(
-                "Saved",
-                f"Configuration Saved!\nPreset: {self.app_state['preset_name']}",
-            )
+            messagebox.showinfo("Success", f"Preset '{name}' saved!")
+        else:
+            messagebox.showerror("Error", "Failed to save config file")
+
+        # เลือกว่าจะใช้ชื่อจาก Dropdown หรือชื่อใหม่ที่พิมพ์ใส่ช่อง
+        name = self.new_preset_var.get().strip()
+        if not name:
+            name = self.preset_var.get()
+        
+        if not name:
+            messagebox.showwarning("Warning", "Please enter or select a preset name")
+            return
+
+        # --- จุดสำคัญ: แปลง Numpy Array เป็น List ปกติก่อนเก็บ ---
+        # (การใช้ .tolist() จะช่วยตัดขาดการอ้างอิงหน่วยความจำ ทำให้แก้แล้วไม่กระทบตัวอื่น)
+        zones_data = {}
+        for k, v in self.app_state['zones'].items():
+            zones_data[k] = v.tolist() 
+
+        # บันทึกลงตัวแปร presets
+        self.presets[name] = zones_data
+        self.app_state['preset_name'] = name
+        
+        # อัปเดต Dropdown
+        self.combo_preset['values'] = list(self.presets.keys())
+        self.preset_var.set(name)
+        self.new_preset_var.set("") # เคลียร์ช่องพิมพ์ชื่อใหม่
+
+        # บันทึกลงไฟล์ JSON
+        if self.save_config():
+            messagebox.showinfo("Success", f"Preset '{name}' saved!")
+        else:
+            messagebox.showerror("Error", "Failed to save config file")
 
     def save_config(self):
         self.app_state["source_type"] = self.src_type_var.get()
